@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>pavbot_teensy_control</name>
+  <version>0.0.1</version>
+  <description>ROS 2 learning skeleton for cmd_vel into axes and a Teensy transport stub.</description>
+
+  <maintainer email="petersonautumn24@gmail.com">PAVbot Team</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>geometry_msgs</depend>
+  <depend>std_msgs</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

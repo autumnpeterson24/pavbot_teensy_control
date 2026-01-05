@@ -1,0 +1,11 @@
+cmd_vel_to_axes:
+  ros__parameters:
+    max_v_mps: 1.0
+    max_w_radps: 1.5
+    deadzone: 0.05
+    axis_rate_hz: 20.0
+
+teensy_transport_stub:
+  ros__parameters:
+    transport_timeout_ms: 250
+    log_rate_hz: 10.0

@@ -1,0 +1,50 @@
+HEY FIYA! Here are some of your next steps:
+
+What your side currently looks like now: 
+
+1. cmd_vel_to_axes (/teensy/axes) ~the skeleton we have right now
+
+2. teensy_serial_transport (not yet written)
+    * serial communication
+
+3. Teensy 4.1 firmware (I2C)
+
+4. DAC (2-channel) (We will need this as extra)
+
+5. Wheelchair joystick input
+
+TASK 1: =============
+Turn the stub into something that looks like real hardware, even if nothing is connected
+
+Create a new node:
+
+    teensy_serial_transport.cpp
+
+It should:
+    - subscribe to /teensy/axes
+
+    - Parse forward and turn
+
+    - Convert them into fixed-point integers (example: int16_t)
+
+    - Print what would be sent over serial
+    ** an example output would be: TX: fwd=1234 turn=-532
+
+* Deliverable: A node that logs “TX frames” at ~20 Hz.
+
+RESOURCES:
+Ros resources:
+https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html
+https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-CPP.html
+
+Serial library resource:
+https://github.com/wjwwood/serial 
+
+Realtime serial data and how to handle packets:
+https://www.embeddedrelated.com/showarticle/113.php
+
+Example of ROS joystick drivers:
+https://github.com/ros-drivers/joystick_drivers
+
+================
+
