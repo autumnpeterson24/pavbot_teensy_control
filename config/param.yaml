@@ -1,9 +1,10 @@
-cmd_vel_to_axes:
+cmd_vel_to_wheels:
   ros__parameters:
-    max_v_mps: 1.0
-    max_w_radps: 1.5
+    track_width_m: 0.62
+    max_wheel_speed_mps: 1.0
     deadzone: 0.05
-    axis_rate_hz: 20.0
+    publish_rate_hz: 20.0
+    cmd_timeout_ms: 250
 
 teensy_transport_stub:
   ros__parameters:

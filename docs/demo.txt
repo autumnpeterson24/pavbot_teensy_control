@@ -2,27 +2,32 @@ DEMO YIPPEE!! :D
 
 TERMINAL 1
 1. Enter ROS envirnoment (i.e. cd ros2_ws)
-2. source install/setup.bash
-3. colcon build --packages-select pavbot_teensy_control * should build if given errors fix then rebuild
-4. ros2 launch pavbot_teensy_control teensy_control.launch.py
+2. cd ~/ros2_ws
+    source /opt/ros/humble/setup.bash
+    source install/setup.bash
+3. launch the nodes:
+    ros2 launch pavbot_teensy_control teensy_control.launch.py
 
-TERMINAL 2 (watch the outputs)
-1. ros2 topic echo /teensy/axes
+TERMINAL 2
+1. watch WheelCmd 
+    source /opt/ros/humble/setup.bash
+    source ~/ros2_ws/install/setup.bash
+    ros2 topic echo /teensy/wheels
 
-TERMINAL 3 (watch trasnport state)
-ros2 topic echo /teensy/trasnport_state
+TERMINAL 3
+1. watch transport state
+    source /opt/ros/humble/setup.bash
+    source ~/ros2_ws/install/setup.bash
+    ros2 topic echo /teensy/transport_state
 
-Check things out!
-1. Run the following commands in the termianl to see the ROS nodes and topics
-    - ros2 node list
-    - ros2 topic list
-    - ros2 topic info /cmd_vel
-    - ros2 topic info /teensy/axes
-    - ros2 topic info /teensy/transport_state
+TERMINAL 4
+1. simulate Nav2 publishing /cmd_vel
 
-2. Publish a velocity command yourself manually!
-    - ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.3}, angular: {z: 0.2}}" -r 10
+STRAIGHT FORWARD
+    ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.4}, angular: {z: 0.0}}"
 
-3. Demonstrate cmd_vel timeout and setting to neurtal if lose connection
-    - stop publisher with Ctrl+C
-    - witnin 250ms in /teensy/axes: forward=0, turn=0, cmd_timeout=true, cmd_age_ms increasing
+TURN IN PLACE
+    ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.0}, angular: {z: 0.8}}"
+
+CURVE (forward+turn)
+    ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.3}, angular: {z: 0.5}}"

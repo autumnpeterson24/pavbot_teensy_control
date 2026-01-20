@@ -2,35 +2,69 @@ HEY FIYA! Here are some of your next steps:
 
 What your side currently looks like now: 
 
-1. cmd_vel_to_axes (/teensy/axes) ~the skeleton we have right now
+1. cmd_vel_to_wheels.cpp ~the skeleton we have right now
 
-2. teensy_serial_transport (not yet written)
+2. teensy_serial_transport (not yet written it is just teensy_control_stub.cpp right now)
     * serial communication
 
-3. Teensy 4.1 firmware (I2C)
-
-4. DAC (2-channel) (We will need this as extra)
-
-5. Wheelchair joystick input
-
 TASK 1: =============
-Turn the stub into something that looks like real hardware, even if nothing is connected
+Replace Stub with Real Serial Transport (Highest Priority)
 
-Create a new node:
+Goals:
+1. Replace teensy_transport_stub with teensy_transport_serial
+2. Preserve the /teensy/wheels interface exactly
 
-    teensy_serial_transport.cpp
+Tasks:
+1. Open a serial port (/dev/ttyACM*)
+2. Serialize WheelCmd.left/right
+3. Transmit at fixed rate (>= 20 Hz)
+4. Implement reconnect-on-reset
+E5. nforce watchdog timeout -> neutral (Jetson side)
 
-It should:
-    - subscribe to /teensy/axes
+Deliverables
+1. teensy_transport_serial.cpp
+2. PROTOCOL.md describing the on-wire format
+3. Parameterized port, baud rate, timeout
 
-    - Parse forward and turn
+Success Criteria
+1. Transport state reports ACTIVE when commands arrive
+2. Motors stop within timeout when /cmd_vel is killed
 
-    - Convert them into fixed-point integers (example: int16_t)
+TASK 2: =================
+Teensy Firmware Integration
 
-    - Print what would be sent over serial
-    ** an example output would be: TX: fwd=1234 turn=-532
+Goals:
+1. Teensy accepts wheel commands and drives motor outputs safely
+2. Independent watchdog on the MCU
 
-* Deliverable: A node that logs “TX frames” at ~20 Hz.
+Tasks:
+1. Parse incoming wheel commands
+2. Map normalized [-1, 1] → motor driver input (PWM/DIR or DAC)
+3. Enforce local timeout -> neutral
+4. Add optional heartbeat / ACK
+
+Success Criteria
+1. Robot stops if Jetson cable is unplugged
+2. Robot stops if Teensy firmware crashes/restarts
+
+Task 3: ===================
+Safety & Integration Hardening
+
+Goals:
+1. Ensure the drivetrain cannot move unless all safety conditions are satisfied
+
+Tasks:
+1. Subscribe to /safety/estop
+2. Force neutral on estop assertion
+3. Add fault reporting (overcurrent, driver fault pins)
+
+Deliverables
+1. Updated transport logic
+2. Clear safety state transitions
+
+Success Criteria
+1. Estop always overrides motion
+2. No unexpected movement during startup/shutdown
 
 RESOURCES:
 Ros resources:
@@ -42,9 +76,6 @@ https://github.com/wjwwood/serial
 
 Realtime serial data and how to handle packets:
 https://www.embeddedrelated.com/showarticle/113.php
-
-Example of ROS joystick drivers:
-https://github.com/ros-drivers/joystick_drivers
 
 ================
 

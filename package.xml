@@ -2,16 +2,25 @@
 <package format="3">
   <name>pavbot_teensy_control</name>
   <version>0.0.1</version>
-  <description>ROS 2 learning skeleton for cmd_vel into axes and a Teensy transport stub.</description>
+  <description>ROS 2 learning skeleton for cmd_vel into wheel commands and a Teensy transport stub.</description>
 
   <maintainer email="petersonautumn24@gmail.com">PAVbot Team</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
+  <!-- Runtime deps -->
+  <depend>pavbot_msgs</depend>
+
   <depend>rclcpp</depend>
   <depend>geometry_msgs</depend>
   <depend>std_msgs</depend>
+  <depend>builtin_interfaces</depend>
+
+  <!-- Interface generation -->
+  <build_depend>rosidl_default_generators</build_depend>
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
 
   <export>
     <build_type>ament_cmake</build_type>
