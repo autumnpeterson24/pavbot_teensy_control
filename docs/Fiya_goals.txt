@@ -22,6 +22,9 @@ Tasks:
     verify which wheel sign corresponds to forward on your base
 
 2. Validate mixing math:
+    v = linear velocity (m/s)
+    w = (omega) angular velocity (rad/s)
+    track_width = distance between left and right wheels (m)
     left = v - w*(track_width/2)
     right = v + w*(track_width/2)
 
@@ -85,7 +88,6 @@ Tasks:
 3. Implement ramp/slew limiting in Teensy firmware (strongly recommended)
 
 4. Create a low-speed “creep mode” parameter for initial testing:
-
     cap outputs to +/- 0.2 until verified
 
 5. Verify direction mapping:
@@ -110,9 +112,9 @@ Goals:
 
 Tasks:
 1. Parse incoming wheel commands
-2. Map normalized [-1, 1] → motor driver input (PWM/DIR or DAC)
+2. Map normalized [-1, 1] -> motor driver input (PWM/DIR or DAC)
 3. Enforce local timeout -> neutral
-4. Add optional heartbeat / ACK
+4. Add optional heartbeat
 
 Success Criteria
 1. Robot stops if Jetson cable is unplugged
