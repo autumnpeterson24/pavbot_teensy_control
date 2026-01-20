@@ -7,6 +7,44 @@ What your side currently looks like now:
 2. teensy_serial_transport (not yet written it is just teensy_control_stub.cpp right now)
     * serial communication
 
+TASK 0: ===================
+
+Mixer Hardening + Control Contract (High Priority)
+
+Goals:
+1. Make cmd_vel_to_wheels.cpp production-ready (correct, tunable, stable with Nav2)
+2. Lock down sign conventions and parameter meanings so nothing “mysteriously flips”
+
+Tasks:
+1. Confirm sign conventions:
+    +linear.x = forward
+    +angular.z = CCW (turn left) per ROS convention
+    verify which wheel sign corresponds to forward on your base
+
+2. Validate mixing math:
+    left = v - w*(track_width/2)
+    right = v + w*(track_width/2)
+
+3. Add/verify parameters (all ROS params, no hardcoded constants):
+    track_width_m
+    max_wheel_speed_mps (normalization reference)
+    deadzone
+    publish_rate_hz
+4. Add a debug topic (optional but it helps a lot):
+    /teensy/wheels_debug (string) for easy echo while testing
+5. Ensure topic names are stable and documented:
+    input: /cmd_vel
+    output: /teensy/wheels (WheelCmd)
+
+Deliverables:
+    1. docs/README.md
+    2. config/param.yaml with default params
+    3. (Optional) /teensy/wheels_debug publisher for learning/debug
+
+Success Criteria:
+1. Publishing /cmd_vel produces predictable left/right outputs
+2. No sign inversions when tested on the real robot (forward command makes both wheels forward)
+
 TASK 1: =============
 Replace Stub with Real Serial Transport (Highest Priority)
 
@@ -29,6 +67,39 @@ Deliverables
 Success Criteria
 1. Transport state reports ACTIVE when commands arrive
 2. Motors stop within timeout when /cmd_vel is killed
+
+TASK 2: ===================
+Motor Mapping + Calibration (Hardware Bring-up)
+
+Goals:
+1. Map WheelCmd [-1,1] to motor driver inputs safely and consistently
+2. Prevent runaway motion due to scaling mistakes
+
+Tasks:
+1. Decide motor command interface:
+    PWM/DIR, DAC joystick emulation, or driver protocol
+
+2. Define neutral behavior explicitly:
+    exact PWM microseconds or DAC center value
+
+3. Implement ramp/slew limiting in Teensy firmware (strongly recommended)
+
+4. Create a low-speed “creep mode” parameter for initial testing:
+
+    cap outputs to +/- 0.2 until verified
+
+5. Verify direction mapping:
+    left forward / right forward are correct physically
+    if reversed, fix in firmware (or document a sign flip in one place only)
+
+Deliverables:
+1. Firmware constants documented (neutral, min/max, deadband)
+2. Param for safe testing
+
+Success Criteria:
+1. First powered test can’t exceed safe speed
+2. Forward command drives forward; turn command turns the correct direction
+3. No oscillation/jerk when commands step (slew limiting works)
 
 TASK 2: =================
 Teensy Firmware Integration
