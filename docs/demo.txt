@@ -5,6 +5,8 @@ TERMINAL 1
 2. cd ~/ros2_ws
     source /opt/ros/humble/setup.bash
     source install/setup.bash
+2a. source /opt/ros/jazzy/setup.bash
+    source install/setup.bash
 3. launch the nodes:
     ros2 launch pavbot_teensy_control teensy_control.launch.py
 
@@ -13,10 +15,18 @@ TERMINAL 2
     source /opt/ros/humble/setup.bash
     source ~/ros2_ws/install/setup.bash
     ros2 topic echo /teensy/wheels
+1a. watch WheelCmd 
+    source /opt/ros/jazzy/setup.bash
+    source ~/ros2_ws/install/setup.bash
+    ros2 topic echo /teensy/wheels
 
 TERMINAL 3
 1. watch transport state
     source /opt/ros/humble/setup.bash
+    source ~/ros2_ws/install/setup.bash
+    ros2 topic echo /teensy/transport_state
+1a. watch transport state
+    source /opt/ros/jazzy/setup.bash
     source ~/ros2_ws/install/setup.bash
     ros2 topic echo /teensy/transport_state
 
