@@ -42,34 +42,6 @@ TURN IN PLACE
 CURVE (forward+turn)
     ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.3}, angular: {z: 0.5}}"
 
---HOW TO TEST THE SERIAL TRANSPORT--
-**this tests ONLY the transport NOT the cmd_vel**
-
-TERMINAL 1:
-1. Check serial port of Teensy 4.1: 
-
-2. cd ~/ros2_ws
-    source /opt/ros/humble/setup.bash
-    source install/setup.bash
-
-3. ros2 run pavbot_teensy_control teensy_serial_transport --ros-args --log-level DEBUG
-
-TERMINAL 2:
-1. source /opt/ros/humble/setup.bash
-source ~/ros2_ws/install/setup.bash
-ros2 topic echo /teensy/transport_state
-
-TERMINAL 3:
-1. Test the sending of serial data!!
-
-STRAIGHT FORWARD
-    ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.4}, angular: {z: 0.0}}"
-
-TURN IN PLACE
-    ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.0}, angular: {z: 0.8}}"
-
-CURVE (forward+turn)
-    ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.3}, angular: {z: 0.5}}"
 
 --TEST THE WHOLE SYSTEM--
 **both cmd_vel AND teensy_transport**
@@ -81,28 +53,43 @@ TERMINAL 1:
     source /opt/ros/humble/setup.bash
     source install/setup.bash
 
-3. ros2 run pavbot_teensy_control teensy_serial_transport --ros-args --log-level DEBUG
+3. ros2 run pavbot_teensy_control cmd_vel_to_wheels
+
 
 TERMINAL 2
-1. watch WheelCmd 
+1. Run serial transport
+    cd ~/ros2_ws
     source /opt/ros/jazzy/setup.bash
     source ~/ros2_ws/install/setup.bash
-    ros2 topic echo /teensy/wheels
+
+2. ros2 run pavbot_teensy_control teensy_serial_transport --ros-args --log-level DEBUG
 
 TERMINAL 3:
 1. source /opt/ros/humble/setup.bash
-source ~/ros2_ws/install/setup.bash
-ros2 topic echo /teensy/transport_state
+   source ~/ros2_ws/install/setup.bash
+
+2. ros2 topic echo /teensy/wheels
 
 TERMINAL 4:
-1. Test the sending of serial data!!
+1. View Transport State (SEIRAL_OK)
+    cd ~/ros2_ws
+    source /opt/ros/jazzy/setup.bash
+    source ~/ros2_ws/install/setup.bash
+    
+2. ros2 topic echo /teensy/transport_state
 
-STRAIGHT FORWARD
+TERMINAL 5:
+1. Test the sending of serial data!!
+    cd ~/ros2_ws
+    source /opt/ros/jazzy/setup.bash
+    source ~/ros2_ws/install/setup.bash
+
+STRAIGHT FORWARD (BOTH LEFT AND RIGHT SYMMETRIC ON DIR AND PWM)
     ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.4}, angular: {z: 0.0}}"
 
 TURN IN PLACE
     ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.0}, angular: {z: 0.8}}"
 
-CURVE (forward+turn)
+CURVE (forward+turn) (BOTH LEFT AND RIGHT SYMMETRIC ON PWM AND OPPOSITE ON DIR)
     ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.3}, angular: {z: 0.5}}"
 
