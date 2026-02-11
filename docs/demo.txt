@@ -43,6 +43,7 @@ CURVE (forward+turn)
     ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.3}, angular: {z: 0.5}}"
 
 
+
 --TEST THE WHOLE SYSTEM--
 **both cmd_vel AND teensy_transport**
 
@@ -62,7 +63,7 @@ TERMINAL 2
     source /opt/ros/jazzy/setup.bash
     source ~/ros2_ws/install/setup.bash
 
-2. ros2 run pavbot_teensy_control teensy_serial_transport --ros-args --log-level DEBUG
+2. ros2 run pavbot_teensy_control teensy_transport_serial --ros-args --log-level DEBUG
 
 TERMINAL 3:
 1. source /opt/ros/humble/setup.bash
@@ -75,7 +76,7 @@ TERMINAL 4:
     cd ~/ros2_ws
     source /opt/ros/jazzy/setup.bash
     source ~/ros2_ws/install/setup.bash
-    
+
 2. ros2 topic echo /teensy/transport_state
 
 TERMINAL 5:
@@ -87,9 +88,15 @@ TERMINAL 5:
 STRAIGHT FORWARD (BOTH LEFT AND RIGHT SYMMETRIC ON DIR AND PWM)
     ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.4}, angular: {z: 0.0}}"
 
-TURN IN PLACE
+TURN IN PLACE (BOTH LEFT AND RIGHT SYMMETRIC ON PWM AND OPPOSITE ON DIR)
     ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.0}, angular: {z: 0.8}}"
 
-CURVE (forward+turn) (BOTH LEFT AND RIGHT SYMMETRIC ON PWM AND OPPOSITE ON DIR)
+CURVE (forward+turn) (BOTH LEFT AND RIGHT SYMMETRIC ON PWM AND DIR)
     ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.3}, angular: {z: 0.5}}"
+
+(ASYMETRIC PWM SAME DIR)
+ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.4}, angular: {z: 0.5}}"
+
+(SYMMETRIC PWM OPPOSITE DIR)
+ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.0}, angular: {z: 1.0}}"
 

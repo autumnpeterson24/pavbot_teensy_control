@@ -13,8 +13,9 @@
 class TeensySerialTransport : public rclcpp::Node {
 public:
   TeensySerialTransport() : Node("teensy_serial_transport") {
-    port_     = this->declare_parameter<std::string>("port", "/dev/ttyACM0");
-    baudrate_ = this->declare_parameter<int>("baudrate", 115200);
+    //PARAMETERIZE THESE
+    port_     = this->declare_parameter<std::string>("port", "/dev/ttyACM1");
+    baudrate_ = this->declare_parameter<int>("baudrate", 20);
     pwm_max_  = this->declare_parameter<int>("pwm_max", 255);
 
     open_serial();
