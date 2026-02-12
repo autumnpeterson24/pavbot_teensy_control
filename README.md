@@ -28,4 +28,5 @@ teensy_transport_stub.cpp - simulates transport layer between Jetson and Teensy
 					
 CMakeLists.txt - make file for all the files in the workspace
 
-package.xml - xml used for the project<img width="1470" height="1112" alt="image" src="https://github.com/user-attachments/assets/aea189af-52da-4bc6-bfb7-6b1da860b03b" />
+package.xml - xml used for the project
+
