@@ -10,3 +10,9 @@ teensy_transport_stub:
   ros__parameters:
     transport_timeout_ms: 250
     log_rate_hz: 10.0
+
+teensy_serial_transport:
+  ros__parameters:
+    port: "/dev/ttyACM1"
+    baudrate: 20
+    pwm_max: 255
