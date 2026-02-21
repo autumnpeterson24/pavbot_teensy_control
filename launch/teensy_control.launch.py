@@ -1,5 +1,6 @@
 """
-Launch: ros2 launch pavbot_teensy_control teensy_control.launch.py
+Launch: 
+ros2 launch pavbot_teensy_control teensy_control.launch.py
 
 ROS commands to check: 
 ros2 topic echo /cmd_vel_nav --once
