@@ -13,6 +13,6 @@ teensy_transport_stub:
 
 teensy_serial_transport:
   ros__parameters:
-    port: "/dev/ttyACM1"
-    baudrate: 20
+    port: "/dev/ttyACM0"
+    baudrate: 115200
     pwm_max: 255
