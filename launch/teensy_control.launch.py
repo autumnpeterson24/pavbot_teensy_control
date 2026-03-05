@@ -15,7 +15,7 @@ import os
 
 def generate_launch_description():
     pkg = get_package_share_directory('pavbot_teensy_control')
-    params = os.path.join(pkg, 'config', 'param.yaml')
+    #params = os.path.join(pkg, 'config', 'param.yaml')
 
     return LaunchDescription([
         Node(
@@ -23,9 +23,16 @@ def generate_launch_description():
             executable='cmd_vel_to_wheels',
             name='cmd_vel_to_wheels',
             output='screen',
-            parameters=[params],
-            remappings=[
-                ('/cmd_vel', '/cmd_vel_nav'),
-            ],
+            #parameters=[params],
+            # remappings=[
+            #     ('/cmd_vel', '/cmd_vel_nav'),
+            # ],
         ),
+
+        Node(
+            package='pavbot_teensy_control',
+            executable='teensy_transport_serial',
+            name='teensy_transport_serial',
+            output='screen'
+        )
     ])

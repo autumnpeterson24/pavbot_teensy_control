@@ -12,9 +12,9 @@
 
 class TeensySerialTransport : public rclcpp::Node {
 public:
-  TeensySerialTransport() : Node("teensy_serial_transport") {
+  TeensySerialTransport() : Node("teensy_transport_serial") {
     //PARAMETERIZE THESE
-    port_     = this->declare_parameter<std::string>("port", "/dev/serial/by-id/usb-Teensyduino_USB_Serial_9147050-if00");
+    port_     = this->declare_parameter<std::string>("port", "/dev/serial/by-id/usb-Teensyduino_USB_Serial_9147050-if00"); //usb-Teensyduino_USB_Serial_9147050-if00
     baudrate_ = this->declare_parameter<int>("baudrate", 115200);
     pwm_max_  = this->declare_parameter<int>("pwm_max", 255);
 
