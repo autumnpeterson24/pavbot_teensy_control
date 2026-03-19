@@ -6,6 +6,8 @@ ROS commands to check:
 ros2 topic echo /cmd_vel_nav --once
 ros2 topic info /teensy/wheels -v
 
+working demo for scitech fest
+
 """
 
 from launch import LaunchDescription
